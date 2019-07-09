@@ -36,4 +36,29 @@ class UtilsTest {
         assertEquals(f, "Art")
         assertNull(l)
     }
+
+    @Test
+    fun translitLower() {
+        val trans = Utils.transliteration("артур")
+        assertEquals("artur", trans)
+    }
+
+    @Test
+    fun translit() {
+        val trans = Utils.transliteration("Артур")
+        assertEquals("Artur", trans)
+    }
+
+
+    @Test
+    fun translit2words() {
+        val trans = Utils.transliteration("Артур бАд")
+        assertEquals("Artur bAd", trans)
+    }
+
+    @Test
+    fun translit2langWords() {
+        val trans = Utils.transliteration("Артур BAD 2")
+        assertEquals("Artur BAD 2", trans)
+    }
 }
