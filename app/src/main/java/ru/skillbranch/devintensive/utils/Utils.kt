@@ -41,4 +41,52 @@ object Utils {
 
         return "${word[0]}"
     }
+
+    fun transliteration(payload: String, divider: Char = ' '): String {
+        val divided = payload.replace(' ', divider)
+        val transliterated = divided.toCharArray().map {
+            val caps = Character.isUpperCase(it)
+            var trans = transliterateCharacter(it.toLowerCase())
+            if (caps) trans = trans.toUpperCase()
+            trans
+        }
+        return transliterated.reduce { sum, char -> sum + char }
+    }
+
+    private fun transliterateCharacter(character: Char): String = when (character) {
+        'а' -> "a"
+        'б' -> "b"
+        'в' -> "v"
+        'г' -> "g"
+        'д' -> "d"
+        'е' -> "e"
+        'ё' -> "e"
+        'ж' -> "zh"
+        'з' -> "z"
+        'и' -> "i"
+        'й' -> "i"
+        'к' -> "k"
+        'л' -> "l"
+        'м' -> "m"
+        'н' -> "n"
+        'о' -> "o"
+        'п' -> "p"
+        'р' -> "r"
+        'с' -> "s"
+        'т' -> "t"
+        'у' -> "u"
+        'ф' -> "f"
+        'х' -> "h"
+        'ц' -> "c"
+        'ч' -> "ch"
+        'ш' -> "sh"
+        'щ' -> "sh'"
+        'ъ' -> ""
+        'ы' -> "i"
+        'ь' -> ""
+        'э' -> "e"
+        'ю' -> "yu"
+        'я' -> "ya"
+        else -> character.toString()
+    }
 }
