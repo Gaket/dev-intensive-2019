@@ -16,4 +16,29 @@ object Utils {
 
         return Pair(firstName, lastName)
     }
+
+    fun toInitials(firstName: String?, lastName: String?): String? {
+        val first = getFirstLetter(firstName)
+        val last = getFirstLetter(lastName)
+        if (first == null && last == null) {
+            return null
+        }
+
+        return "${if(first!=null) first else ""}${if(last!=null) last else ""}".toUpperCase()
+    }
+
+    fun transliteration( payload: String, divider:String = " ") {
+        var translit: String
+        if (divider != " ") {
+            translit = payload.replace(" ", divider)
+        }
+    }
+
+    private fun getFirstLetter(word: String?): String? {
+        if (word.isNullOrBlank()) {
+            return null
+        }
+
+        return "${word[0]}"
+    }
 }
