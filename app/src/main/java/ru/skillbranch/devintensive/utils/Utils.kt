@@ -35,8 +35,8 @@ object Utils {
         return "${word[0]}"
     }
 
-    fun transliteration(payload: String, divider: Char = ' '): String {
-        val divided = payload.replace(' ', divider)
+    fun transliteration(payload: String, divider: String = " "): String {
+        val divided = payload.replace(" ", divider)
         val transliterated = divided.toCharArray().map {
             val caps = Character.isUpperCase(it)
             var trans = transliterateCharacter(it.toLowerCase())
