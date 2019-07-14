@@ -31,6 +31,40 @@ fun Date.add(value: Int, units: TimeUnits): Date {
     return this
 }
 
+//  0с - 1с "только что"
+//
+//  1с - 45с "несколько секунд назад"
+//
+//  45с - 75с "минуту назад"
+//
+//  75с - 45мин "N минут назад"
+//
+//  45мин - 75мин "час назад"
+//
+//  75мин 22ч "N часов назад"
+//
+//  22ч - 26ч "день назад"
+//
+//  26ч - 360д "N дней назад"
+//
+//  >360д "более года назад"
+fun Date.humanizeDiff(): String {
+    val time = this.time
+    val diff = System.currentTimeMillis() - time
+    return when (diff) {
+        in 0..SECOND -> "только что"
+        in SECOND..45 * SECOND -> "несколько секунд назад"
+        in 45 * SECOND..75 * SECOND -> "минуту назад"
+        in 75 * SECOND..45 * MINUTE -> "${diff / MINUTE} минут назад"
+        in 45 * MINUTE..75 * MINUTE -> "час назад"
+        in 75 * MINUTE..22 * HOUR -> "${diff / HOUR} часов назад"
+        in 22 * HOUR..26 * HOUR -> "день назад"
+        in 26 * HOUR..360 * DAY -> "${diff / DAY} дней назад"
+        in 360 * DAY..Long.MAX_VALUE -> "более года назад"
+        else -> ""
+    }
+}
+
 enum class TimeUnits {
     SECOND,
     MINUTE,
