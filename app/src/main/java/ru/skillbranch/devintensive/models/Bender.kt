@@ -1,6 +1,8 @@
 package ru.skillbranch.devintensive.models
 
-class Bender(var status: Status = Status.NORMAL, var question: Question = Question.NAME) {
+import java.io.Serializable
+
+class Bender(var status: Status = Status.NORMAL, var question: Question = Question.NAME): Serializable {
 
     fun askQuestion(): String = when (question) {
         Question.NAME -> Question.NAME.question
@@ -12,13 +14,16 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     }
 
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
-        return if (question.answers.contains(answer)) {
+
+        val (valid, comment) = validateAnswer(answer)
+        if (!valid) {
+            return "$comment\n${question.question}" to status.color
+        }
+
+        val loweredAnswer = answer.toLowerCase()
+        return if (question.answers.contains(loweredAnswer)) {
             question = question.nextQuestion()
-            if (question == Question.IDLE) {
-                "Отлично - ты справился\nНа этом все, вопросов больше нет" to status.color
-            } else {
-                "Отлично - ты справился\n${question.question}" to status.color
-            }
+            "Отлично - ты справился\n${question.question}" to status.color
         } else {
             if (status == Status.CRITICAL) {
                 question = Question.NAME
@@ -30,6 +35,33 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             }
         }
     }
+
+    //Question.NAME -> "Имя должно начинаться с заглавной буквы"
+    //Question.PROFESSION -> "Профессия должна начинаться со строчной буквы"
+    //Question.MATERIAL -> "Материал не должен содержать цифр"
+    //Question.BDAY -> "Год моего рождения должен содержать только цифры"
+    //Question.SERIAL -> "Серийный номер содержит только цифры, и их 7"
+    //Question.IDLE -> //игнорировать валидацию
+    fun validateAnswer(answer: String): Pair<Boolean, String> {
+        return when (question) {
+            Question.NAME -> if (startFromUpper(answer)) true to "" else false to "Имя должно начинаться с заглавной буквы"
+            Question.PROFESSION -> if (!startFromUpper(answer)) true to "" else false to "Профессия должна начинаться со строчной буквы"
+            Question.MATERIAL -> if (noNumbers(answer)) true to "" else false to "Материал не должен содержать цифр"
+            Question.BDAY -> if (onlyNumbers(answer)) true to "" else false to "Год моего рождения должен содержать только цифры"
+            Question.SERIAL -> if (answer.length == 7 && onlyNumbers(answer)) true to "" else false to "Серийный номер содержит только цифры, и их 7"
+            Question.IDLE -> true to ""
+        }
+    }
+
+    private fun onlyNumbers(answer: String): Boolean {
+        return answer.toCharArray().filter { char -> char.isDigit().not() }.isEmpty()
+    }
+
+    private fun noNumbers(answer: String): Boolean {
+        return answer.toCharArray().filter { char -> char.isDigit() }.isEmpty()
+    }
+
+    private fun startFromUpper(answer: String) = answer.isNotBlank() && answer[0].isUpperCase()
 
     enum class Status(val color: Triple<Int, Int, Int>) {
         NORMAL(Triple(255, 255, 255)),
@@ -50,9 +82,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         SERIAL("Мой серийный номер?", listOf("2716057")),
         IDLE("На этом все, вопросов больше нет", listOf());
 
-        fun nextQuestion(): Question =
-                if (this != IDLE) values()[ordinal + 1]
-                else values()[0]
+        fun nextQuestion(): Question = values()[ordinal + 1]
     }
 
 }
