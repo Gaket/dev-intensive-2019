@@ -2,13 +2,13 @@ package ru.skillbranch.devintensive
 
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.skillbranch.devintensive.extensions.hideKeyboard
 import ru.skillbranch.devintensive.models.Bender
@@ -17,12 +17,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private val benderKey = "Bender"
 
-    private lateinit var benderObj: Bender
+    lateinit var sendBtn: ImageView
+    lateinit var messageEt: EditText
+    lateinit var benderImage: ImageView
+    lateinit var textTxt: TextView
 
-    private lateinit var sendBtn: ImageView
-    private lateinit var messageEt: EditText
-    private lateinit var benderImage: ImageView
-    private lateinit var textTxt: TextView
+    private lateinit var benderObj: Bender
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +35,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         if (savedInstanceState != null) {
             benderObj = savedInstanceState.getSerializable(benderKey) as Bender
+            setColorFromStatus()
         } else {
             benderObj = Bender()
         }
+        setQuestion()
 
-        textTxt.text = benderObj.askQuestion()
         sendBtn.setOnClickListener(this)
 
         messageEt.setOnEditorActionListener { _, actionId, _ ->
@@ -49,6 +50,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 true
             } else false
         }
+    }
+
+    private fun setQuestion() {
+        textTxt.text = benderObj.askQuestion()
     }
 
     override fun onClick(v: View?) {
@@ -62,7 +67,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString().trim())
         textTxt.setText(phrase)
         messageEt.setText("")
-        val (r, g, b) = color
+        setColorFromStatus()
+    }
+
+    private fun setColorFromStatus() {
+        val (r, g, b) = benderObj.status.color
         benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
     }
 

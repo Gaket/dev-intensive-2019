@@ -2,9 +2,6 @@ package ru.skillbranch.devintensive.models
 
 import java.util.*
 
-/**
- * Created by Artur (gaket) on 2019-07-04.
- */
 abstract class BaseMessage(
     val id : String,
     val from : User?,
@@ -26,7 +23,6 @@ abstract class BaseMessage(
             return when(type){
                 "image" -> ImageMessage ("$lastId", from, chat, date=date, image = payload as String, isIncoming = isIncoming)
                 else -> TextMessage ("$lastId", from, chat, date=date, text = payload as String, isIncoming = isIncoming)
-
             }
         }
     }

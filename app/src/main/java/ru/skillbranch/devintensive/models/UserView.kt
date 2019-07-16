@@ -3,9 +3,6 @@ package ru.skillbranch.devintensive.models
 import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
 
-/**
- * Created by Artur (gaket) on 2019-07-02.
- */
 data class UserView(
     val id: String,
     var firstName: String?,
@@ -19,10 +16,7 @@ data class UserView(
     var introBit: String
 
     constructor(id: String, firstName: String?, lastName: String?) : this(
-        id = id,
-        firstName = firstName,
-        lastName = lastName,
-        avatar = null
+        id = id, firstName = firstName, lastName = lastName, avatar = null
     )
 
     constructor(id: String) : this(id, "John", "Doe $id")
@@ -44,23 +38,8 @@ data class UserView(
     }
 
     private fun getIntro() = """
-        la la
-        topolya
         $firstName
         ${"\n"}
         $lastName
     """.trimIndent()
-
-    fun printMe() = println(
-        """
-        id: $id
-        firstName: $firstName
-        lastName: $lastName
-        avatar: $avatar
-        rating: $rating
-        respect: $respect
-        lastVisit: $lastVisit
-        isOnline: $isOnline
-    """.trimIndent()
-    )
 }

@@ -1,8 +1,5 @@
 package ru.skillbranch.devintensive.utils
 
-/**
- * Created by Artur (gaket) on 2019-07-02.
- */
 object Utils {
 
     fun parseFullName(fullName: String?): Pair<String?, String?> {

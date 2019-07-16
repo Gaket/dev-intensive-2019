@@ -3,9 +3,6 @@ package ru.skillbranch.devintensive.models
 import ru.skillbranch.devintensive.extensions.humanizeDiff
 import java.util.*
 
-/**
- * Created by Artur (gaket) on 2019-07-04.
- */
 class ImageMessage(
     id: String,
     from: User?,
