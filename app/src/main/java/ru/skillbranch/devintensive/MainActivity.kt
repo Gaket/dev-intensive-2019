@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
