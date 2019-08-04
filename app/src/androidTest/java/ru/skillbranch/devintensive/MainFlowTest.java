@@ -1,5 +1,6 @@
 package ru.skillbranch.devintensive;
 
+import android.content.pm.ActivityInfo;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.assertion.ViewAssertions;
@@ -15,6 +16,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(AndroidJUnit4.class)
 public class MainFlowTest {
+
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
 
@@ -43,7 +45,7 @@ public class MainFlowTest {
     }
 
     @Test
-    public void afterCorrectAnswer_professionQuestionIsAsked() {
+    public void afterCorrectAnswer_professionQuestionIsAsked() throws InterruptedException {
 
         Espresso.onView(ViewMatchers.withId(R.id.et_message))
                 .perform(ViewActions.click());
@@ -59,5 +61,32 @@ public class MainFlowTest {
 
         Espresso.onView(ViewMatchers.withId(R.id.tv_text))
                 .check(ViewAssertions.matches(ViewMatchers.withText("Отлично - ты справился\nНазови мою профессию?")));
+    }
+
+    @Test
+    public void afterpPofessionQuestion_rotateScreen_professionQuestionIsAsked() throws InterruptedException {
+
+        Espresso.onView(ViewMatchers.withId(R.id.et_message))
+                .perform(ViewActions.click());
+
+        Espresso.onView(ViewMatchers.withId(R.id.et_message))
+                .perform(ViewActions.typeText("Bender"));
+
+        Espresso.onView(ViewMatchers.withId(R.id.iv_send))
+                .perform(ViewActions.click());
+
+        Espresso.onView(ViewMatchers.withId(R.id.iv_send))
+                .perform(ViewActions.closeSoftKeyboard());
+
+        Espresso.onView(ViewMatchers.withId(R.id.tv_text))
+                .check(ViewAssertions.matches(ViewMatchers.withText("Отлично - ты справился\nНазови мою профессию?")));
+
+        rule.getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        Thread.sleep(1000);
+
+        Espresso.onView(ViewMatchers.withId(R.id.tv_text))
+                .check(ViewAssertions.matches(ViewMatchers.withText("Как меня зовут?")));
+
     }
 }
