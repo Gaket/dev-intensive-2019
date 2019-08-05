@@ -9,7 +9,7 @@ import ru.skillbranch.devintensive.models.Profile
 import ru.skillbranch.devintensive.repositories.PreferencesRepository
 
 /**
- * Created by Artur (gaket) on 2019-08-04.
+ * Created by Gaket on 2019-08-04.
  */
 class ProfileViewModel : ViewModel() {
 
@@ -52,25 +52,25 @@ class ProfileViewModel : ViewModel() {
 
     fun validateRepo(repository: String) {
         repoValid.value = repository.isEmpty() || repository.matches(
-            Regex("^(https://)?(www.)?(github.com/)(?!(${getRegexExceptions()})(?=/|$))(?![\\W])(?!\\w+[-]{2})[a-zA-Z0-9-]+(?<![-])(/)?$")
+                Regex("^(https://)?(www.)?(github.com/)(?!(${getRegexExceptions()})(?=/|$))(?![\\W])(?!\\w+[-]{2})[a-zA-Z0-9-]+(?<![-])(/)?$")
         )
     }
 
     private fun getRegexExceptions(): String {
         val exceptions = arrayOf(
-            "enterprise",
-            "features",
-            "topics",
-            "collections",
-            "trending",
-            "events",
-            "join",
-            "pricing",
-            "nonprofit",
-            "customer-stories",
-            "security",
-            "login",
-            "marketplace"
+                "enterprise",
+                "features",
+                "topics",
+                "collections",
+                "trending",
+                "events",
+                "join",
+                "pricing",
+                "nonprofit",
+                "customer-stories",
+                "security",
+                "login",
+                "marketplace"
         )
         return exceptions.joinToString("|")
     }

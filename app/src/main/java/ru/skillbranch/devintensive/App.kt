@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import ru.skillbranch.devintensive.repositories.PreferencesRepository
 
 /**
- * Created by Artur (gaket) on 2019-08-04.
+ * Created by Gaket on 2019-08-04.
  */
 class App : Application() {
     companion object {

@@ -7,7 +7,7 @@ import ru.skillbranch.devintensive.App
 import ru.skillbranch.devintensive.models.Profile
 
 /**
- * Created by Artur (gaket) on 2019-08-04.
+ * Created by Gaket on 2019-08-04.
  */
 object PreferencesRepository {
 

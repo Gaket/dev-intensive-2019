@@ -46,14 +46,14 @@ class ProfileActivity : AppCompatActivity() {
         isEditMode = savedInstanceState?.getBoolean(IS_EDIT_MODE, false) ?: false
 
         viewFields = mapOf(
-            "nickname" to tv_nick_name,
-            "rank" to tv_rank,
-            "firstName" to et_first_name,
-            "lastName" to et_last_name,
-            "about" to et_about,
-            "repository" to et_repository,
-            "rating" to tv_rating,
-            "respect" to tv_respect
+                "nickname" to tv_nick_name,
+                "rank" to tv_rank,
+                "firstName" to et_first_name,
+                "lastName" to et_last_name,
+                "about" to et_about,
+                "repository" to et_repository,
+                "rating" to tv_rating,
+                "respect" to tv_respect
         )
         showCurrentMode(isEditMode)
 
@@ -73,23 +73,20 @@ class ProfileActivity : AppCompatActivity() {
             override fun onTextChanged(text: CharSequence, p1: Int, p2: Int, p3: Int) {
                 viewModel.validateRepo(text.toString())
             }
-
             override fun afterTextChanged(p0: Editable?) {}
             override fun beforeTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         })
 
     }
 
-    private fun checkRepoState(isValid: Boolean) {
-        if (isValid) {
+    private fun checkRepoState(isValidate: Boolean) {
+        if (isValidate) {
             wr_repository.error = null
-            nested_scroll.scrollY = et_repository.bottom
         } else {
             wr_repository.error = "Невалидный адрес репозитория"
-            nested_scroll.scrollY = wr_repository.bottom
             et_repository.requestFocus()
         }
-        wr_repository.isErrorEnabled = !isValid
+        wr_repository.isErrorEnabled = !isValidate
     }
 
     private fun setInitials(initials: String) {
@@ -134,8 +131,8 @@ class ProfileActivity : AppCompatActivity() {
         with(btn_edit) {
             val filter: ColorFilter? = if (isEditMode) {
                 PorterDuffColorFilter(
-                    resources.getColor(R.color.color_accent, theme),
-                    PorterDuff.Mode.SRC_IN
+                        resources.getColor(R.color.color_accent, theme),
+                        PorterDuff.Mode.SRC_IN
                 )
             } else {
                 null
@@ -154,10 +151,10 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun saveProfileInfo() {
         Profile(
-            firstName = et_first_name.text.toString(),
-            lastName = et_last_name.text.toString(),
-            about = et_about.text.toString(),
-            repository = et_repository.text.toString()
+                firstName = et_first_name.text.toString(),
+                lastName = et_last_name.text.toString(),
+                about = et_about.text.toString(),
+                repository = et_repository.text.toString()
         ).apply {
             viewModel.saveProfileData(this)
         }

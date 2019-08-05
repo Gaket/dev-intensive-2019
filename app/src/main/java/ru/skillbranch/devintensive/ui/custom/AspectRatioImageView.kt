@@ -1,4 +1,4 @@
-package ru.skillbranch.devintensive.ui
+package ru.skillbranch.devintensive.ui.custom
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,7 +6,7 @@ import android.widget.ImageView
 import ru.skillbranch.devintensive.R
 
 /**
- * Created by Artur (gaket) on 2019-08-04.
+ * Created by Gaket on 2019-08-04.
  */
 class AspectRatioImageView @JvmOverloads constructor(
     context: Context,
