@@ -36,7 +36,7 @@ class CircleImageView @JvmOverloads constructor(
     private var borderWidth = DEFAULT_BORDER_WIDTH * resources.displayMetrics.density
     private var borderColor = DEFAULT_BORDER_COLOR
 
-    private var civImage: Bitmap? = null
+    private var image: Bitmap? = null
 
     init {
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.CircleImageView, defStyleAttr, 0)
@@ -48,7 +48,7 @@ class CircleImageView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         loadBitmap()
 
-        if (civImage == null) return
+        if (image == null) return
         val circleCenterWithBorder = circleCenter + borderWidth
 
         canvas.drawCircle(circleCenterWithBorder, circleCenterWithBorder, circleCenterWithBorder, paintBorder)
@@ -102,7 +102,7 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     private fun update() {
-        if (civImage != null)
+        if (image != null)
             updateShader()
 
         val usableWidth = width - (paddingLeft + paddingRight)
@@ -115,7 +115,7 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     private fun loadBitmap() {
-        civImage = drawableToBitmap(drawable)
+        image = drawableToBitmap(drawable)
         updateShader()
     }
 
@@ -125,7 +125,7 @@ class CircleImageView @JvmOverloads constructor(
     }
 
     private fun updateShader() {
-        civImage?.also {
+        image?.also {
             val shader = BitmapShader(it, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
 
             val scale =

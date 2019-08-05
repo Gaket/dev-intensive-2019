@@ -42,22 +42,19 @@ object PreferencesRepository {
     )
 
     fun saveProfile(profile: Profile) {
-        with(profile) {
-            putValue(NICKNAME to profile.nickName)
-            putValue(FIRSTNAME to profile.firstName)
-            putValue(LASTNAME to profile.lastName)
-            putValue(ABOUT to profile.about)
-            putValue(REPOSITORY to profile.repository)
-            putValue(RATING to profile.rating)
-            putValue(RESPECT to profile.respect)
-        }
+        putValue(NICKNAME to profile.nickName)
+        putValue(FIRSTNAME to profile.firstName)
+        putValue(LASTNAME to profile.lastName)
+        putValue(ABOUT to profile.about)
+        putValue(REPOSITORY to profile.repository)
+        putValue(RATING to profile.rating)
+        putValue(RESPECT to profile.respect)
     }
 
     private fun putValue(pair: Pair<String, Any>) = with(prefs.edit()) {
         val key = pair.first
-        val value = pair.second
 
-        when (value) {
+        when (val value = pair.second) {
             is String -> putString(key, value)
             is Int -> putInt(key, value)
             is Boolean -> putBoolean(key, value)
@@ -68,7 +65,4 @@ object PreferencesRepository {
 
         apply()
     }
-
-
-
 }
