@@ -23,7 +23,7 @@ fun Activity.isKeyboardClosed(): Boolean {
 }
 
 private fun Activity.isKeyboardVisible(): Boolean {
-    val activityRoot = findViewById<ViewGroup>(R.id.activity_root)
+    val activityRoot = findViewById<ViewGroup>(android.R.id.content)
     val rootView = getWindow().getDecorView().getRootView()
     val visible = Rect()
     rootView.getWindowVisibleDisplayFrame(visible)
